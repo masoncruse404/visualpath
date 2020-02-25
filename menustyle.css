@@ -15,6 +15,7 @@
     font-family: 'roboto',arial;
     padding:2px 4px;
     color:#CDCDCD;
+    cursor:pointer;
 }
 
 .menurow:hover{
