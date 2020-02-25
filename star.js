@@ -1,6 +1,7 @@
 //https://en.wikipedia.org/wiki/A*_search_algorithm
 var firstClick = true;
 var secondClick = false;
+var noPath = false;
 function reconstruct_path (cameFrom, current, id) {
   const total_path = [current]
   while(cameFrom.has(id(current))) {
@@ -39,7 +40,7 @@ function A_Star(start, goal, h, neighbours, id = x=>x, d=(a,b)=>1) {
         current = node
       }
     }
-    
+
     if (id(current) == id(goal)) {
       return reconstruct_path(cameFrom, current, id)
     }
@@ -61,6 +62,7 @@ function A_Star(start, goal, h, neighbours, id = x=>x, d=(a,b)=>1) {
     })
   }
   // Open set is empty but goal was never reached
+  noPath = true;
   return false
 }
 
@@ -119,7 +121,7 @@ function makeRows(rows, cols) {
      //cell.innerText = (c);
     cell.setAttribute("id",c);
     container.appendChild(cell).className = "grid-item";
- 
+
   }
 }
 
@@ -128,8 +130,8 @@ var nodes = [256];
 function init(){
   for(let i=0; i<N*N; i++){
     nodes[i] = new Cell(i);
-  } 
-  
+  }
+
 }
 var obstacles = new Set();
 
@@ -155,7 +157,7 @@ var cell = document.querySelectorAll('.grid-item');
 [...obstacles].forEach(id => {
   cell[id].style.backgroundColor = 'pink'
 })
-function myFunction(e) {
+function resetActive(e) {
   var elems = document.querySelector(".active");
   if(elems !==null){
    elems.classList.remove("active");
@@ -175,24 +177,24 @@ function checkClick(i){
     hasStart = true;
     cell[start.index].style.backgroundColor = "blue";
     btnStart = false;
-    myFunction();
+    resetActive();
   }
   else if(btnEnd){
     //click end goal node
     end = new Cell(i);
     hasEnd = true;
     cell[end.index].style.backgroundColor = "red";
-   
+
     btnEnd = false;
-     myFunction();
-    
+     resetActive();
+
 }else if(btnObstacles){
- 
+
   var integer = parseInt(i,10);
   obstacles.add(integer);
 
   cell[i].style.backgroundColor = "black";
-  myFunction();
+  resetActive();
 }
 
 }
@@ -212,7 +214,7 @@ function findNeighbors(index){
           continue;
         }
         // +++
-        
+
         if (obstacles.has(posToIndex(x + xx, y + yy))) {
           continue
         }
@@ -230,7 +232,7 @@ var btnEnd = false;
 var btnSearch = false;
 
 function buttonStart(){
-  myFunction();
+  resetActive();
    btnStart = true;
    btnObstacles = false;
    btnEnd = false;
@@ -239,7 +241,7 @@ function buttonStart(){
 }
 
 function buttonEnd(){
-   myFunction();
+   resetActive();
    btnStart = false;
    btnObstacles = false;
    btnEnd = true;
@@ -248,7 +250,7 @@ function buttonEnd(){
 }
 
 function buttonSearch(){
-   myFunction();
+   resetActive();
    btnStart = false;
    btnObstacles = false;
    btnEnd = false;
@@ -259,9 +261,12 @@ function buttonSearch(){
    }else if(!end){
     $('#myAlertEnd').show('fade');
     return;
+   }else if(noPath){
+    $('#myAlertNoPath').show('fade');
+    return;
    }
 
-   
+
    document.getElementById("search").classList.add("active");
    let came_from = A_Star(start, end, function (cell) {
   return heuristic(cell.index, end.index)
@@ -276,12 +281,12 @@ came_from.slice(1, -1).forEach(c => {
   if(elems !==null){
    elems.classList.remove("active");
   }
-   
+
 }
 
 function buttonReset(){
-  
- 
+
+
   location.reload();
 return false;
 
@@ -289,6 +294,7 @@ return false;
 
 
 function buttonObstacles(){
+   resetActive();
   document.getElementById("obstacles").classList.add("active");
    btnStart = false;
    btnObstacles = true;
@@ -299,7 +305,7 @@ function buttonObstacles(){
 
 var cell = document.querySelectorAll('.grid-item');
 for(let i=0; i<N*N; i++){
-  cell[i].onclick = function(){let y = indexToPositionY(this.id); 
+  cell[i].onclick = function(){let y = indexToPositionY(this.id);
     let x = indexToPositionX(this.id);
     console.log(x,y);
     checkClick(this.id);

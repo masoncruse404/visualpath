@@ -6,4 +6,7 @@ $(document).ready(function (){
 	$('#endAlertClose').click(function(){
 		$('#myAlertEnd').hide('fade');
 	})
+	$('#NoPathAlertClose').click(function(){
+		$('#myAlertNoPath').hide('fade');
+	})
 })
