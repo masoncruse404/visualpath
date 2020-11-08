@@ -29,3 +29,9 @@
     z-index:9999; 
     border-radius:0px
 }
+
+
+
+#myMenu div div span {
+  pointer-events: none;
+}

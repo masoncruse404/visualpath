@@ -226,6 +226,13 @@ function findNeighbors(index){
     return neighbors;
 }
 
+document.getElementById("myMenu").addEventListener("click", function( e ){
+    e = window.event || e; 
+    if(this === e.target) {
+        // put your code here
+    }
+});
+
 var btnStart = false;
 var btnObstacles = false;
 var btnEnd = false;
