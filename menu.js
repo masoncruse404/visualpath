@@ -8,14 +8,17 @@ function addListeners(){
 
 function mouseUp()
 {
+    
     window.removeEventListener('mousemove', divMove, true);
 }
 
 function mouseDown(e){
+  e.preventDefault();
   window.addEventListener('mousemove', divMove, true);
 }
 
 function divMove(e){
+  e.preventDefault();
     var div = document.getElementById('myMenu');
   div.style.position = 'absolute';
   div.style.top = e.clientY + 'px';
