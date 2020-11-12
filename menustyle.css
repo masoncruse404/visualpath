@@ -4,10 +4,11 @@
     height:180px;
     width:150px;
     border:1px solid rgba(0,0,0,.3);
-    background-color:rgba(0,0,0,.6);
+    background-color:black;
     border-radius:5px;
         overflow: hidden;
         box-shadow: 0 15px 10px rgba(0,0,0,0.5);
+    z-index:999;
 
 }
 
