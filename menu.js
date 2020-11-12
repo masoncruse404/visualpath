@@ -6,9 +6,9 @@ function addListeners(){
 
 }
 
-function mouseUp()
+function mouseUp(e)
 {
-    
+    e.preventDefault();
     window.removeEventListener('mousemove', divMove, true);
 }
 
@@ -19,7 +19,7 @@ function mouseDown(e){
 
 function divMove(e){
   e.preventDefault();
-    var div = document.getElementById('myMenu');
+  var div = document.getElementById('myMenu');
   div.style.position = 'absolute';
   div.style.top = e.clientY + 'px';
   div.style.left = e.clientX + 'px';
