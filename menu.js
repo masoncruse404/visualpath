@@ -18,11 +18,12 @@ function mouseDown(e){
 }
 
 function divMove(e){
-  e.preventDefault();
   var div = document.getElementById('myMenu');
   div.style.position = 'absolute';
   div.style.top = e.clientY + 'px';
   div.style.left = e.clientX + 'px';
+  e.preventDefault();
+
 }
 
 function closeMenu(){
